@@ -7,6 +7,7 @@ import path from "path";
 import { fileURLToPath } from "url"; 
 import methodOverride from "method-override";
 import dotenv from 'dotenv';
+import { createSecretKey } from "crypto";
 dotenv.config();
 
 
@@ -85,6 +86,13 @@ app.put("/listings/:id",async(req,res)=>{
   res.redirect(`/listings/${id}`);
 });
 
+// Delete Route
+app.delete("/listings/:id",async (req,res)=>{
+  let {id} = req.params;
+  let deletedListing = await Listing.findByIdAndDelete(id);
+  console.log(`Deleted ==> ${deletedListing}`);
+  res.redirect("/listings");
+})
 
 app.listen(PORT, () => {
   console.log(`app rendered on port http://localhost:${PORT}/listings`);
