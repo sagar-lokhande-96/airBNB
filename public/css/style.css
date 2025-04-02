@@ -1,3 +1,18 @@
-body{
+/* body{
     background-color: rgb(247, 0, 0);
+} */
+
+/* Navbar */
+.navbar{
+    background-color: white ;
+    height: 5rem ;
+}
+
+.fa-compass{
+    color:#fa424d ;
+    height: 2rem;
+}
+
+.nav-link{
+    color: #222222 !important;  /*used for override the color */
 }
