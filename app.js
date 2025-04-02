@@ -7,7 +7,7 @@ import path from "path";
 import { fileURLToPath } from "url"; 
 import methodOverride from "method-override";
 import dotenv from 'dotenv';
-import { createSecretKey } from "crypto";
+import ejsMate from "ejs-mate";
 dotenv.config();
 
 
@@ -34,6 +34,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended:true})); 
 app.use(methodOverride('_method'));
+app.engine('ejs', ejsMate);
 
 app.get("/", (req, res) => {
   console.log("hello i am from roote");
