@@ -6,9 +6,19 @@
   </form> -->
   <h3>Listings !!!</h3>
 
-  <ul>
+  <div class="row row-cols-md-2 row-cols-lg-3 row-cols-sm-1">
     <% for(listing of allListings){ %>
-    <li><a href="/listings/<%=listing.id%>"><%=listing.title%></a></li>
-    <% } %>
-  </ul>
+      <div class="card col" style="width: 20rem;">
+        <img class="card-img-top" src="<%=listing.image.url%>" alt="listing_images">
+        <div class="card-body">
+          <p class="card-text">
+            <%= listing.title %>
+            <br>
+            &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+          </p>
+        </div>
+      </div>
+      <% } %>
+  </div>
+  
 </body>
