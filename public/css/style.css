@@ -1,72 +1,88 @@
-/* body{
-    background-color: rgb(247, 0, 0);
-} */
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  /* font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal; */
+}
 
 /* Navbar */
-.navbar{
-    background-color: white ;
-    height: 5rem ;
+.navbar {
+  background-color: white;
+  height: 5rem;
 }
 
-.fa-compass{
-    color:#fa424d ;
-    height: 2rem;
+.fa-compass {
+  color: #fa424d;
+  height: 2rem;
 }
 
-.nav-link{
-    color: #222222 !important;  /*used for override the color */
+.nav-link {
+  color: #222222 !important; /*used for override the color */
 }
 
 /* Footer */
 
-.f-info-links a{
-    color: #222222;
-    text-decoration: none;
+.f-info-links a {
+  color: #222222;
+  text-decoration: none;
 }
 
-.f-info-links a:hover{
-    text-decoration: underline;
+.f-info-links a:hover {
+  text-decoration: underline;
 }
 
 .f-info-links,
 .f-info-brand,
-.f-info-social{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.f-info-social {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.f-info-social i{
-    margin-right: 1rem;
-    font-size: 1.2rem;
+.f-info-social i {
+  margin-right: 1rem;
+  font-size: 1.2rem;
 }
 
-.f-info{
-    background-color: #ebebeb;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    height: 8rem;
-    align-items: space-evenly;
+.f-info {
+  background-color: #ebebeb;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 8rem;
+  align-items: space-evenly;
 }
 
 /* Cards */
 
-.card{
-    border: none !important;
-    margin-bottom: 2rem;
+.card {
+  border: none !important;
+  margin-bottom: 2rem;
 }
-.card-img-top{
-    border-radius: 1rem !important;
-    width: 100% !important;
-    object-fit: cover !important;
-}
-
-.card-body{
-    padding: 0 !important;
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  object-fit: cover !important;
 }
 
-.card-text p{
-    font-weight: 400;
+.card-body {
+  padding: 0 !important;
+}
+
+.card-text p {
+  font-weight: 400 !important;
+}
+
+.listing-link{
+    text-decoration: none;
+}
+
+/* Card-effect */
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
 }
