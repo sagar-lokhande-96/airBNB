@@ -4,7 +4,11 @@
   <h2>Details Listing:</h2>
   <li>title : <%=listing.title%></li>
   <li>discription : <%=listing.description%></li>
-  <li>price : &#8377; <%= listing.price.toLocaleString("en-IN") %></li>
+  <% if (listing.price != null) { %>
+   <li>Price : &#8377; <%= listing.price.toLocaleString("en-IN") %> / night</li>
+  <% } else { %>
+    <li>Price : not available </li>
+  <% } %>
   <li>location : <%=listing.location%></li>
   <li>country : <%=listing.country%></li>
   <br /><br />

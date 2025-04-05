@@ -14,10 +14,10 @@ const listingSchema = new Schema({
     url: {
       type: String,
       default:
-        "https://unsplash.com/photos/mountain-peak-illuminated-at-sunset-over-forest-0r_37j49VZk",
-        set: (v) =>
+        "https://images.unsplash.com/photo-1568605114967-8130f3a36994",
+      set: (v) =>
         v === ""
-          ? "https://unsplash.com/photos/mountain-peak-illuminated-at-sunset-over-forest-0r_37j49VZk"
+          ? "https://images.unsplash.com/photo-1568605114967-8130f3a36994"
           : v,
     },
   },
