@@ -50,6 +50,7 @@ body {
 }
 
 .f-info {
+    text-align: center;
   background-color: #ebebeb;
   display: flex;
   flex-wrap: wrap;
@@ -96,4 +97,11 @@ body {
 .add-btn{
     background-color: #fa424d !important;
     border: none !important;
+}
+
+/* Edit-page */
+
+.edit-btn{
+    background-color: #fa424d !important;
+    border: none !important; 
 }
