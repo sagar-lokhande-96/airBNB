@@ -5,8 +5,8 @@ body {
   min-height: 100vh;
 }
 
-.container{
-    flex: 1;
+.container {
+  flex: 1;
 }
 
 /* Navbar */
@@ -50,7 +50,7 @@ body {
 }
 
 .f-info {
-    text-align: center;
+  text-align: center;
   background-color: #ebebeb;
   display: flex;
   flex-wrap: wrap;
@@ -79,29 +79,44 @@ body {
   font-weight: 400 !important;
 }
 
-.listing-link{
-    text-decoration: none;
+.listing-link {
+  text-decoration: none;
 }
 
 /* Card-effect */
-.card-img-overlay{
-    opacity: 0;
+.card-img-overlay {
+  opacity: 0;
 }
-.card-img-overlay:hover{
-    opacity: 0.2;
-    background-color: white;
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: white;
 }
 
 /* New-page */
 
-.add-btn{
-    background-color: #fa424d !important;
-    border: none !important;
+.add-btn {
+  background-color: #fa424d !important;
+  border: none !important;
 }
 
 /* Edit-page */
 
-.edit-btn{
-    background-color: #fa424d !important;
-    border: none !important; 
+.edit-btn {
+  background-color: #fa424d !important;
+  border: none !important;
+}
+
+/* Show-Page */
+
+.show-img {
+  height: 30vh;
+}
+
+.btns{
+  display: flex;
+}
+
+.show-card{
+  padding-left: 0;
+  padding-right: 0;
 }
