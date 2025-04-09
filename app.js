@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import methodOverride from "method-override";
 import dotenv from 'dotenv';
 import ejsMate from "ejs-mate";
+import asyncWrap from "./utils/asyncWrap.js";
 dotenv.config();
 
 
@@ -65,13 +66,13 @@ app.get("/listings/:id",async (req,res)=>{
 })
 
 // add Route
-app.post("/listings",async (req,res)=>{
+app.post("/listings",asyncWrap(async (req,res)=>{
   //let listing = req.body.listing;
   let newListing = new Listing(req.body.listing); 
   await newListing.save();
   //console.log("successfull sends!!");
   res.redirect("/listings");
-})
+}));
 
 // Edit Route 
 app.get("/listings/:id/edit",async(req,res)=>{
@@ -96,6 +97,24 @@ app.delete("/listings/:id",async (req,res)=>{
   res.redirect("/listings");
 })
 
+//test Route
+// app.get("testListing",async (req,res)=>{
+//   let sampleListing = new Listing({
+//     title: "New home Villa",
+//     description: "This is a villa.",
+//     price: 1200,
+//     location: "Goa",
+//     country: "India",
+//   });
+
+//   await sampleListing.save();
+//   console.log("sample was saved");
+//   res.send("successfull testing");
+// })
+
+app.use((err,req,res,next)=>{
+  res.send("something is wrong!!");
+})
 app.listen(PORT, () => {
   console.log(`app rendered on port http://localhost:${PORT}/listings`);
 });
