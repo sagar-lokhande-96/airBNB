@@ -9,6 +9,7 @@ import methodOverride from "method-override";
 import dotenv from 'dotenv';
 import ejsMate from "ejs-mate";
 import asyncWrap from "./utils/asyncWrap.js";
+import ExpressError from "./utils/ExpressError.js";
 dotenv.config();
 
 
@@ -44,11 +45,11 @@ app.get("/", (req, res) => {
 });
 
 // index Route 
-app.get("/listings", async (req, res) => {
+app.get("/listings", asyncWrap(async (req, res) => {
   let allListings = await Listing.find({});
   //console.log("listings works");
   res.render("listings/index", { allListings });
-});
+}));
 
 // create Route
 app.get("/listings/new",(req,res)=>{
@@ -57,17 +58,20 @@ app.get("/listings/new",(req,res)=>{
 
 
 // views Route 
-app.get("/listings/:id",async (req,res)=>{
+app.get("/listings/:id",asyncWrap(async (req,res)=>{
   let {id} = req.params;
   //console.log({id});
   let listing = await Listing.findById(id);
   //console.log(listing);
   res.render("listings/show",{ listing })
-})
+}));
 
 // add Route
 app.post("/listings",asyncWrap(async (req,res)=>{
   //let listing = req.body.listing;
+  if(!req.body.listing){
+    throw new ExpressError(400, "send valid data for listing");
+  }
   let newListing = new Listing(req.body.listing); 
   await newListing.save();
   //console.log("successfull sends!!");
@@ -75,27 +79,30 @@ app.post("/listings",asyncWrap(async (req,res)=>{
 }));
 
 // Edit Route 
-app.get("/listings/:id/edit",async(req,res)=>{
+app.get("/listings/:id/edit",asyncWrap(async(req,res)=>{
   let {id} = req.params;
   let listing = await Listing.findById(id);
   res.render("listings/edit",{listing});
-});
+}));
 
 
 // Update Route
-app.put("/listings/:id",async(req,res)=>{
+app.put("/listings/:id",asyncWrap(async(req,res)=>{
+  if(!req.body.listing){
+    throw new ExpressError(400, "send valid data for listing");
+  }
   let {id} = req.params;
   await Listing.findByIdAndUpdate(id, {...req.body.listing});
   res.redirect(`/listings/${id}`);
-});
+}));
 
 // Delete Route
-app.delete("/listings/:id",async (req,res)=>{
+app.delete("/listings/:id",asyncWrap(async (req,res)=>{
   let {id} = req.params;
   let deletedListing = await Listing.findByIdAndDelete(id);
   console.log(`Deleted ==> ${deletedListing}`);
   res.redirect("/listings");
-})
+}));
 
 //test Route
 // app.get("testListing",async (req,res)=>{
@@ -112,8 +119,13 @@ app.delete("/listings/:id",async (req,res)=>{
 //   res.send("successfull testing");
 // })
 
+app.all("*",(req,res,next)=>{
+  next(new ExpressError(404,"Page not found!!"));
+});
+
 app.use((err,req,res,next)=>{
-  res.send("something is wrong!!");
+  let {statusCode=500, message="something went wrong!!!"} =err;
+  res.status(statusCode).send(message);
 })
 app.listen(PORT, () => {
   console.log(`app rendered on port http://localhost:${PORT}/listings`);
