@@ -45,6 +45,18 @@ app.get("/", (req, res) => {
   res.send("Hello, I am from the root route!");
 });
 
+// backend listing validation
+const validateListing = (req,res,next )=>{
+  let { error } = listingSchema.validate(req.body);
+  if(error){
+    let errMsg = error.details.map((e)=> e.message).join(",");
+    throw new ExpressError(400, errMsg);
+  }
+  else{
+    next();
+  }
+}
+
 // index Route 
 app.get("/listings", asyncWrap(async (req, res) => {
   let allListings = await Listing.find({});
@@ -68,15 +80,10 @@ app.get("/listings/:id",asyncWrap(async (req,res)=>{
 }));
 
 // create Route
-app.post("/listings",asyncWrap(async (req,res)=>{
+app.post("/listings", validateListing, asyncWrap (async (req,res)=>{
   // if(!req.body.listing){
   //   throw new ExpressError(400, "send valid data for listing");
   // }
-  let listing = listingSchema.validate(req.body);
-  console.log(listing);
-  if(listing.error){
-    throw new ExpressError(400, listing.error);
-  }
   let newListing = new Listing(req.body.listing); 
   await newListing.save();
   //console.log("successfull sends!!");
@@ -92,10 +99,7 @@ app.get("/listings/:id/edit",asyncWrap(async(req,res)=>{
 
 
 // Update Route
-app.put("/listings/:id",asyncWrap(async(req,res)=>{
-  if(!req.body.listing){
-    throw new ExpressError(400, "send valid data for listing");
-  }
+app.put("/listings/:id", validateListing, asyncWrap(async(req,res)=>{
   let {id} = req.params;
   await Listing.findByIdAndUpdate(id, {...req.body.listing});
   res.redirect(`/listings/${id}`);
