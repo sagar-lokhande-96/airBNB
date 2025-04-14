@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
 import ejsMate from "ejs-mate";
 import asyncWrap from "./utils/asyncWrap.js";
 import ExpressError from "./utils/ExpressError.js";
+import listingSchema from "./schema.js";
 dotenv.config();
 
 
@@ -51,7 +52,7 @@ app.get("/listings", asyncWrap(async (req, res) => {
   res.render("listings/index", { allListings });
 }));
 
-// create Route
+// create page Route
 app.get("/listings/new",(req,res)=>{
   res.render("listings/new",);
 })
@@ -66,11 +67,15 @@ app.get("/listings/:id",asyncWrap(async (req,res)=>{
   res.render("listings/show",{ listing })
 }));
 
-// add Route
+// create Route
 app.post("/listings",asyncWrap(async (req,res)=>{
-  //let listing = req.body.listing;
-  if(!req.body.listing){
-    throw new ExpressError(400, "send valid data for listing");
+  // if(!req.body.listing){
+  //   throw new ExpressError(400, "send valid data for listing");
+  // }
+  let listing = listingSchema.validate(req.body);
+  console.log(listing);
+  if(listing.error){
+    throw new ExpressError(400, listing.error);
   }
   let newListing = new Listing(req.body.listing); 
   await newListing.save();
@@ -125,7 +130,8 @@ app.all("*",(req,res,next)=>{
 
 app.use((err,req,res,next)=>{
   let {statusCode=500, message="something went wrong!!!"} =err;
-  res.status(statusCode).send(message);
+  res.status(statusCode).render("error",{message});
+  // res.status(statusCode).send(message);
 })
 app.listen(PORT, () => {
   console.log(`app rendered on port http://localhost:${PORT}/listings`);
